@@ -1,38 +1,29 @@
-'''This function takes two strings as input that
-represent two positive integers and subtracts them.
-It outputs the result as a string.
-Note: This function only works if the first number
-is larger than the second. That is, this function
-is unable to produce negative results.
-Note: This can leave leading zeros, but that is not
-an issue for how this function will be used
-'''
+def subtract(num1, num2):
+    m = len(num1)
+    n = len(num2)
 
-# Time Complexity: O(max(m, n))
-# Space Complexity: O(1)
+    num1 = num1[::-1]
+    num2 = num2[::-1]
 
-def subtract(s1, s2):
     result = []
     carry = 0
-    i = len(s1) - 1
-    j = len(s2) - 1
 
-    # Iterate through both strings backwards
-    while i >= 0:
-        d1 = int(s1[i])
-        if j >= 0:
-            d2 = int(s2[j])
+    for i in range(m):
+        d1 = num1[i]
+        if i < n:
+            d2 = num2[i]
         else:
             d2 = 0
 
-        if d1 - carry < d2:
-            result.append(str(d1 - d2 - carry + 10))
+        total = d1 - d2 - carry
+        if total < 0:
+            result.append(total + 10)
             carry = 1
         else:
-            result.append(str(d1 - d2 - carry))
+            result.append(total)
             carry = 0
 
-        i -= 1
-        j -= 1
+    while len(result) > 1 and result[-1] == 0:
+        result.pop()
 
-    return ''.join(result[::-1])
+    return result[::-1]
